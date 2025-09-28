@@ -51,3 +51,43 @@ When a file is added to the SharePoint logs library:
 - Full audit trail in SharePoint
 
 ## Structure
+flowchart TD
+    A[Weekly Schedule (Azure Automation Runbook)] --> B[PowerShell Script (Hybrid or Azure Worker)]
+    B --> PNP[Connect-PnPOnline (Cert or Secret)]
+    B --> API[Graph and SharePoint Online APIs]
+    API --> SCAN[Scan all OneDrives owned by IB users]
+
+    subgraph Decision
+      SCAN --> D1{Site has &lt; 3 IB segments?}
+      D1 -- No --> SKIP[Healthy - skip]
+      D1 -- Yes --> D2{Stamped segment is Private or Public?}
+      D2 --> PRIV[Determine Private]
+      D2 --> PUB[Determine Public]
+      PRIV --> STAMP[Stamp missing allowed segments (SharePoint REST ProcessQuery)]
+      PUB  --> STAMP
+    end
+
+    STAMP --> LOG_ACTION[Write action_*.txt]
+    B --> LOG_ERRORS[Write errors_*.txt]
+    D1 -->|Yes| LOG_LT3[Write lessThan3_*.txt]
+    STAMP --> LOG_FIXES[Write fixes_*.txt]
+
+    subgraph SharePoint Logs Library
+      UP_ACTION[Upload action_*.txt] --> SP[(SharePoint Library)]
+      UP_ERRORS[Upload errors_*.txt] --> SP
+      UP_LT3[Upload lessThan3_*.txt] --> SP
+      UP_FIXES[Upload fixes_*.txt] --> SP
+    end
+
+    LOG_ACTION --> UP_ACTION
+    LOG_ERRORS --> UP_ERRORS
+    LOG_LT3 --> UP_LT3
+    LOG_FIXES --> UP_FIXES
+
+    subgraph Power Automate Flow
+      TRIG{On file created: name starts with "fixes" AND ends with ".txt"?}
+      TRIG -- Yes --> TEAMS[Post message in Microsoft Teams (attach file or include contents)]
+      TRIG -- No  --> NOOP[Do nothing]
+    end
+
+    SP --> TRIG
