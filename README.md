@@ -51,6 +51,8 @@ When a file is added to the SharePoint logs library:
 - Full audit trail in SharePoint
 
 ## Structure
+
+```mermaid
 flowchart TD
     A[Weekly Schedule (Azure Automation Runbook)] --> B[PowerShell Script (Hybrid or Azure Worker)]
     B --> PNP[Connect-PnPOnline (Cert or Secret)]
