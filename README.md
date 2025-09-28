@@ -54,7 +54,7 @@ When a file is added to the SharePoint logs library:
 
 ```mermaid
 flowchart TD
-    A[Weekly Schedule - Azure Automation Runbook] --> B[PowerShell Script - Hybrid or Azure Worker]
+    A[Weekly Schedule - Azure Automation Runbook or Task Scheduler] --> B[PowerShell Script - Hybrid or Azure Worker]
     B --> PNP[Connect-PnPOnline - Cert or Secret]
     B --> API[Graph and SharePoint Online APIs]
     API --> SCAN[Scan all OneDrives owned by IB users]
