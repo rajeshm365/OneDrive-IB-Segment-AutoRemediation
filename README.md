@@ -50,7 +50,7 @@ When a file is added to the SharePoint logs library:
 - Write-protected via app permissions
 - Full audit trail in SharePoint
 
-## Structure
+## 🏗️ Architecture
 
 ```mermaid
 flowchart TD
