@@ -54,8 +54,8 @@ When a file is added to the SharePoint logs library:
 
 ```mermaid
 flowchart TD
-    A[Weekly Schedule (Azure Automation Runbook)] --> B[PowerShell Script (Hybrid or Azure Worker)]
-    B --> PNP[Connect-PnPOnline (Cert or Secret)]
+    A[Weekly Schedule - Azure Automation Runbook] --> B[PowerShell Script - Hybrid or Azure Worker]
+    B --> PNP[Connect-PnPOnline - Cert or Secret]
     B --> API[Graph and SharePoint Online APIs]
     API --> SCAN[Scan all OneDrives owned by IB users]
 
@@ -65,7 +65,7 @@ flowchart TD
       D1 -- Yes --> D2{Stamped segment is Private or Public?}
       D2 --> PRIV[Determine Private]
       D2 --> PUB[Determine Public]
-      PRIV --> STAMP[Stamp missing allowed segments (SharePoint REST ProcessQuery)]
+      PRIV --> STAMP[Stamp missing allowed segments - SharePoint REST ProcessQuery]
       PUB  --> STAMP
     end
 
@@ -87,8 +87,8 @@ flowchart TD
     LOG_FIXES --> UP_FIXES
 
     subgraph Power Automate Flow
-      TRIG{On file created: name starts with "fixes" AND ends with ".txt"?}
-      TRIG -- Yes --> TEAMS[Post message in Microsoft Teams (attach file or include contents)]
+      TRIG{On file created - name starts with "fixes" AND ends with ".txt"?}
+      TRIG -- Yes --> TEAMS[Post message in Microsoft Teams - attach file or include contents]
       TRIG -- No  --> NOOP[Do nothing]
     end
 
