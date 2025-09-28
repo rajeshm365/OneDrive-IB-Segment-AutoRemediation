@@ -66,19 +66,19 @@ flowchart TD
       D2 --> PRIV[Determine Private]
       D2 --> PUB[Determine Public]
       PRIV --> STAMP[Stamp missing allowed segments - SharePoint REST ProcessQuery]
-      PUB  --> STAMP
+      PUB --> STAMP
     end
 
-    STAMP --> LOG_ACTION[Write action_*.txt]
-    B --> LOG_ERRORS[Write errors_*.txt]
-    D1 -->|Yes| LOG_LT3[Write lessThan3_*.txt]
-    STAMP --> LOG_FIXES[Write fixes_*.txt]
+    STAMP --> LOG_ACTION[Write action star .txt]
+    B --> LOG_ERRORS[Write errors star .txt]
+    D1 -->|Yes| LOG_LT3[Write lessThan3 star .txt]
+    STAMP --> LOG_FIXES[Write fixes star .txt]
 
     subgraph SharePoint Logs Library
-      UP_ACTION[Upload action_*.txt] --> SP[(SharePoint Library)]
-      UP_ERRORS[Upload errors_*.txt] --> SP
-      UP_LT3[Upload lessThan3_*.txt] --> SP
-      UP_FIXES[Upload fixes_*.txt] --> SP
+      UP_ACTION[Upload action logs] --> SP[(SharePoint Library)]
+      UP_ERRORS[Upload error logs] --> SP
+      UP_LT3[Upload lessThan3 logs] --> SP
+      UP_FIXES[Upload fixes logs] --> SP
     end
 
     LOG_ACTION --> UP_ACTION
@@ -87,9 +87,9 @@ flowchart TD
     LOG_FIXES --> UP_FIXES
 
     subgraph Power Automate Flow
-      TRIG{On file created - name starts with "fixes" AND ends with ".txt"?}
+      TRIG{On file created - name starts with fixes and ends with .txt?}
       TRIG -- Yes --> TEAMS[Post message in Microsoft Teams - attach file or include contents]
-      TRIG -- No  --> NOOP[Do nothing]
+      TRIG -- No --> NOOP[Do nothing]
     end
 
     SP --> TRIG
